@@ -1,4 +1,5 @@
 <?php
+
 /**
  * finalassignment Theme Customizer
  *
@@ -10,12 +11,13 @@
  *
  * @param WP_Customize_Manager $wp_customize Theme Customizer object.
  */
-function finalassignment_customize_register( $wp_customize ) {
-	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
-	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
-	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
+function finalassignment_customize_register($wp_customize)
+{
+	$wp_customize->get_setting('blogname')->transport         = 'postMessage';
+	$wp_customize->get_setting('blogdescription')->transport  = 'postMessage';
+	$wp_customize->get_setting('header_textcolor')->transport = 'postMessage';
 
-	if ( isset( $wp_customize->selective_refresh ) ) {
+	if (isset($wp_customize->selective_refresh)) {
 		$wp_customize->selective_refresh->add_partial(
 			'blogname',
 			array(
@@ -32,15 +34,16 @@ function finalassignment_customize_register( $wp_customize ) {
 		);
 	}
 }
-add_action( 'customize_register', 'finalassignment_customize_register' );
+add_action('customize_register', 'finalassignment_customize_register');
 
 /**
  * Render the site title for the selective refresh partial.
  *
  * @return void
  */
-function finalassignment_customize_partial_blogname() {
-	bloginfo( 'name' );
+function finalassignment_customize_partial_blogname()
+{
+	bloginfo('name');
 }
 
 /**
@@ -48,14 +51,130 @@ function finalassignment_customize_partial_blogname() {
  *
  * @return void
  */
-function finalassignment_customize_partial_blogdescription() {
-	bloginfo( 'description' );
+function finalassignment_customize_partial_blogdescription()
+{
+	bloginfo('description');
 }
 
 /**
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
-function finalassignment_customize_preview_js() {
-	wp_enqueue_script( 'finalassignment-customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), _S_VERSION, true );
+function finalassignment_customize_preview_js()
+{
+	wp_enqueue_script('finalassignment-customizer', get_template_directory_uri() . '/js/customizer.js', array('customize-preview'), _S_VERSION, true);
 }
-add_action( 'customize_preview_init', 'finalassignment_customize_preview_js' );
+add_action('customize_preview_init', 'finalassignment_customize_preview_js');
+
+// custom customizer for this theme
+function anik_finalassignment_customizer_register($wp_customize)
+{
+
+	/**Top Header Area customizer**/
+	$wp_customize->add_section('top_header_area', array(
+		'title' => esc_html__('Top Header Area', 'finalassignment'),
+		'description' => esc_html__('If you change anything of top header area,you can it from here', 'finalassignment'),
+	));
+	$wp_customize->add_setting('header_phone', array(
+		'default' => '(+56) 565 5656',
+	));
+	$wp_customize->add_control('header_phone', array(
+		'label' => esc_html__('Phone Number', 'finalassignment'),
+		'description' => esc_html__('If you change you phone number,you can just write your phone number', 'finalassignment'),
+		'section' => 'top_header_area',
+		'setting' => 'header_email'
+	));
+	// for header email customizer
+	$wp_customize->add_setting('header_email', array(
+		'default' => 'enfo@mail.com',
+	));
+	$wp_customize->add_control('header_email', array(
+		'label' => esc_html__('Email', 'finalassignment'),
+		'description' => esc_html__('If you change you email,you can just write your email', 'finalassignment'),
+		'section' => 'top_header_area',
+		'setting' => 'header_email'
+	));
+
+	// for header social facebook link customizer
+	$wp_customize->add_setting('header_social_facebook', array(
+		'default' => '',
+		'sanitize_callback' => 'esc_url',
+		'transport' => 'postMessage',
+	));
+	$wp_customize->add_control('header_social_facebook', array(
+		'type' => 'url',
+		'label' => esc_html__('Facebook Link', 'finalassignment'),
+		'section' => 'top_header_area',
+		'setting' => 'header_social_facebook',
+		'input_attrs' => array(
+			'placeholder' => 'https://www.facebook.com/your-profile',
+		),
+	));
+	// for header social twitter link customizer
+	$wp_customize->add_setting('header_social_twitter', array(
+		'default' => '',
+		'sanitize_callback' => 'esc_url',
+		'transport' => 'postMessage',
+	));
+	$wp_customize->add_control('header_social_twitter', array(
+		'type' => 'url',
+		'label' => esc_html__('Twitter Link', 'finalassignment'),
+		'section' => 'top_header_area',
+		'setting' => 'header_social_twitter',
+		'input_attrs' => array(
+			'placeholder' => 'https://www.twitter.com/your-profile',
+		),
+	));
+
+	// Instagram link control
+	$wp_customize->add_setting('header_social_instagram', array(
+		'default'           => '',
+		'sanitize_callback' => 'esc_url',
+		'transport' => 'postMessage',
+	));
+
+	$wp_customize->add_control('header_social_instagram', array(
+		'type'        => 'url',
+		'label'       => esc_html__('Instagram Link', 'finalassignment'),
+		'section'     => 'top_header_area',
+		'settings'    => 'header_social_instagram',
+		'input_attrs' => array(
+			'placeholder' => 'https://www.instagram.com/your-profile',
+		),
+	));
+
+	// LinkedIn link control
+	$wp_customize->add_setting('header_social_linkedin', array(
+		'default'           => '',
+		'sanitize_callback' => 'esc_url',
+		'transport' => 'postMessage',
+	));
+
+	$wp_customize->add_control('header_social_linkedin', array(
+		'type'        => 'url',
+		'label'       => esc_html__('LinkedIn Link', 'finalassignment'),
+		'section'     => 'top_header_area',
+		'settings'    => 'header_social_linkedin',
+		'input_attrs' => array(
+			'placeholder' => 'https://www.linkedin.com/in/your-profile',
+		),
+	));
+
+	// Vimeo link control
+	$wp_customize->add_setting('header_social_vimeo', array(
+		'default'           => '',
+		'sanitize_callback' => 'esc_url',
+		'transport' => 'postMessage',
+	));
+
+	$wp_customize->add_control('header_social_vimeo', array(
+		'type'        => 'url',
+		'label'       => esc_html__('Vimeo Link', 'finalassignment'),
+		'section'     => 'top_header_area',
+		'settings'    => 'header_social_vimeo',
+		'input_attrs' => array(
+			'placeholder' => 'https://vimeo.com/your-profile',
+		),
+	));
+}
+
+add_action('customize_register', 'anik_finalassignment_customizer_register');

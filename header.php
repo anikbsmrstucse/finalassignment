@@ -32,18 +32,18 @@
 				<div class="row">
 					<div class="col-md-6 align-self-center">
 						<div class="top-info">
-							<span><i class="fas fa-phone-alt"></i> (+56) 565 5656</span>
-							<span><i class="far fa-envelope"></i> enfo@mail.com</span>
+							<span><i class="fas fa-phone-alt"></i> <?php echo get_theme_mod('header_phone'); ?></span>
+							<span><i class="far fa-envelope"></i> <?php echo get_theme_mod('header_email'); ?></span>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="top-social">
 							<ul>
-								<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-								<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fab fa-instagram"></i></a></li>
-								<li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-								<li><a href="#"><i class="fab fa-vimeo-v"></i></a></li>
+								<li><a href="<?php echo get_theme_mod('header_social_facebook') ?>"><i class="fab fa-facebook-f"></i></a></li>
+								<li><a href="<?php echo get_theme_mod('header_social_twitter') ?>"><i class="fab fa-twitter"></i></a></li>
+								<li><a href="<?php echo get_theme_mod('header_social_instagram') ?>"><i class="fab fa-instagram"></i></a></li>
+								<li><a href="<?php echo get_theme_mod('header_social_linkedin') ?>"><i class="fab fa-linkedin"></i></a></li>
+								<li><a href="<?php echo get_theme_mod('header_social_vimeo') ?>"><i class="fab fa-vimeo-v"></i></a></li>
 							</ul>
 						</div>
 					</div>
