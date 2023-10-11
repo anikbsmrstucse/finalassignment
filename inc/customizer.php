@@ -175,6 +175,21 @@ function anik_finalassignment_customizer_register($wp_customize)
 			'placeholder' => 'https://vimeo.com/your-profile',
 		),
 	));
+
+	// header logo area 
+	/** this code change logo from header area **/
+	$wp_customize->add_section('bottom_header_area', array(
+		'title' => esc_html__('Bottom Header Area', 'finalassignment'),
+	));
+	$wp_customize->add_setting('header_logo', array(
+		'default' => '',
+
+	));
+	$wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'header_logo', array(
+		'label' => esc_html__('Upload Logo','finalassignment'),
+		'section' => 'bottom_header_area',
+		'control' => 'header_logo',
+	)));
 }
 
 add_action('customize_register', 'anik_finalassignment_customizer_register');

@@ -55,7 +55,7 @@
 				<div class="row">
 					<div class="col-lg-2 align-self-center">
 						<div class="logo">
-							<h2><a href="index.html">Logo</a></h2>
+							<a href="<?php echo esc_url(home_url('/')); ?>"><img width="160" height="40" src="<?php echo get_theme_mod('header_logo'); ?>" alt=""></a>
 						</div>
 						<div class="canvas_open">
 							<a href="javascript:void(0)"><i class="fas fa-bars"></i></a>
@@ -67,8 +67,13 @@
 						</div>
 						<div class="menu">
 							<nav>
-								<ul>
-									<li><a href="index.html">Home</a></li>
+								<?php
+								wp_nav_menu(array(
+									'theme_location' => 'primary',
+									'menu_class' => 'menu-nav',
+								));
+								?>
+								<!-- <li><a href="index.html">Home</a></li>
 									<li><a href="about.html">About Us</a></li>
 									<li><a href="#">Page</a>
 										<ul>
@@ -94,7 +99,7 @@
 											<li><a href="single.html">Blog Details</a></li>
 										</ul>
 									</li>
-									<li><a href="contact.html">Contact us</a></li>
+									<li><a href="contact.html">Contact us</a></li> -->
 								</ul>
 							</nav>
 						</div>

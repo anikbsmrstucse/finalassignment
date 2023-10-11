@@ -13,7 +13,7 @@
 	.menu {
 		display: none;
 	}
-	.right-btn-m {
+	.right-btn-m .button-1{
 		display: none;
 	}
 	.logo {
@@ -40,7 +40,7 @@
 		margin-top: 15px;
 		margin-bottom: 5px;
 	}
-	.top-social {
+	.top-social ul{
 		text-align: center;
 	}
 	.about-area, .counter-area, .testimonial-area{
