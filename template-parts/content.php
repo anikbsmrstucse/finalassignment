@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template part for displaying posts
  *
@@ -9,55 +10,70 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="entry-header">
-		<?php
-		if ( is_singular() ) :
-			the_title( '<h1 class="entry-title">', '</h1>' );
-		else :
-			the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
-		endif;
+<?php if (is_single()) : ?>
 
-		if ( 'post' === get_post_type() ) :
-			?>
-			<div class="entry-meta">
-				<?php
-				finalassignment_posted_on();
-				finalassignment_posted_by();
-				?>
-			</div><!-- .entry-meta -->
-		<?php endif; ?>
-	</header><!-- .entry-header -->
+	<div class="col-lg-12 mb-30">
+		<div class="blog-details">
+			<div class="blog-item">
+				<div class="thumbnail">
+					<?php
+					$image_url = get_the_post_thumbnail_url(get_the_ID(), 'post-thumbnails');
 
-	<?php finalassignment_post_thumbnail(); ?>
+					if ($image_url) {
+						echo '<img alt="..." src="' . esc_url($image_url) . '">';
+					}
+					?>
+				</div>
+				<div class="content">
+					<div class="meta">
+						<span><i class="far fa-calendar-check"></i> <?php echo the_time('j, F  Y'); ?> </span>
+						<span><i class="far fa-comment-alt"></i> <?php echo get_comments_number() > 0 ? get_comments_number() : 'No'; ?> Comments</span>
+						<?php
+						$post_id = get_the_ID(); // Replace with your specific post ID
+						$tags = wp_get_post_tags($post_id);
 
-	<div class="entry-content">
-		<?php
-		the_content(
-			sprintf(
-				wp_kses(
-					/* translators: %s: Name of current post. Only visible to screen readers */
-					__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'finalassignment' ),
-					array(
-						'span' => array(
-							'class' => array(),
-						),
-					)
-				),
-				wp_kses_post( get_the_title() )
-			)
-		);
+						if ($tags) {
+							foreach ($tags as $tag) {
+								echo '<span><i class="fas fa-tags"></i> ' . esc_html($tag->name) . '</span>';
+							}
+						} else {
+							echo '';
+						}
+						?>
+					</div>
+					<h3><?php echo the_title(); ?></h3>
+					<p><?php echo the_content(); ?></p>
 
-		wp_link_pages(
-			array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'finalassignment' ),
-				'after'  => '</div>',
-			)
-		);
-		?>
-	</div><!-- .entry-content -->
+				</div>
+			</div>
 
-	<footer class="entry-footer">
-		<?php finalassignment_entry_footer(); ?>
-	</footer><!-- .entry-footer -->
-</article><!-- #post-<?php the_ID(); ?> -->
+		</div>
+	</div>
+
+<?php else : ?>
+
+	<div class="col-lg-12 mb-30">
+		<div class="blog-item">
+			<div class="thumbnail">
+				<a href="<?php the_permalink(); ?>">
+					<?php
+					$image_url = get_the_post_thumbnail_url(get_the_ID(), 'post-thumbnails');
+
+					if ($image_url) {
+						echo '<img alt="..." src="' . esc_url($image_url) . '">';
+					}
+					?>
+				</a>
+			</div>
+			<div class="content">
+				<div class="meta">
+					<span><i class="far fa-calendar-check"></i> <?php echo the_time('j, F  Y'); ?></span>
+					<span><i class="far fa-comment-alt"></i> <?php echo get_comments_number() > 0 ? get_comments_number() : 'No'; ?> Comments</span>
+				</div>
+				<h3><a href="<?php echo the_permalink(); ?>"><?php the_title(); ?></a></h3>
+				<p><?php echo wp_trim_words(get_the_excerpt(), 50); ?></p>
+				<a class="read-more" href="<?php the_permalink(); ?>">Load More <i class="fas fa-angle-double-right"></i></a>
+			</div>
+		</div>
+	</div>
+<?php endif;

@@ -285,7 +285,7 @@ function anik_widget_registration()
 			'name'          => esc_html__('Sidebar', 'finalassignment'),
 			'id'            => 'sidebar-1',
 			'description'   => esc_html__('Add widgets here.', 'finalassignment'),
-			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'before_widget' => '<section id="%1$s" class="sidebar-widgets">',
 			'after_widget'  => '</section>',
 			'before_title'  => '<h2 class="widget-title">',
 			'after_title'   => '</h2>',
@@ -340,6 +340,26 @@ add_theme_support('widgets');
 //     }
 //     echo join( ' > ', $crumbs );
 // }
+
+
+// pagination or page navigation
+function anik_page_nav(){
+    global $wp_query,$wp_rewrite;
+    $pages = '';
+    $max = $wp_query->max_num_pages;
+    if(!$current=get_query_var('paged')) $current = 1;
+    $args['base'] = str_replace(90, '%#%' , get_pagenum_link(90)); //get_pagenum_link and replace value must be same otherwise function data cannot be fount.
+    // $args['base'] = $wp_rewrite->pagination_base . '/%#%';
+    $args['current'] = $current;
+    $total = 1;
+    $args['prev_text'] = '<i class="fa fa-angle-left"></i>';
+    $args['next_text'] = '<i class="fa fa-angle-right"></i>';
+    if($max > 1) echo '</pre>
+    <div class="blog-pagination text-center">';
+    // if($total == 1 && $max > 1) $pages = '<p class="pages"> Page ' . $current .'<span> of </span>' . $max .'</p>';
+    echo $pages . paginate_links($args);
+    if($max>1) echo '</div><pre>';
+}
 
 
 /**
