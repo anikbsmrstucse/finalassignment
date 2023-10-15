@@ -176,8 +176,7 @@ function anik_finalassignment_customizer_register($wp_customize)
 		),
 	));
 
-	// header logo area 
-	/** this code change logo from header area **/
+	// header logo area
 	$wp_customize->add_section('bottom_header_area', array(
 		'title' => esc_html__('Bottom Header Area', 'finalassignment'),
 	));
@@ -190,6 +189,18 @@ function anik_finalassignment_customizer_register($wp_customize)
 		'section' => 'bottom_header_area',
 		'control' => 'header_logo',
 	)));
+	//bottom header text
+	$wp_customize->add_setting('header_button_text', array(
+		'default' => esc_html__('Quote Now','finalassignment'),
+		'transport' => 'postMessage',
+
+	));
+	$wp_customize->add_control('header_button_text', array(
+		'label' => esc_html__('Header Button Text','finalassignment'),
+		'section' => 'bottom_header_area',
+		'control' => 'header_button_text',
+	));
+
 }
 
 add_action('customize_register', 'anik_finalassignment_customizer_register');

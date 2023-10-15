@@ -63,7 +63,7 @@
 					</div>
 					<div class="col-lg-10">
 						<div class="right-btn-m align-self-center">
-							<a class="button-1" href="quote.html">Quote Now</a>
+							<a class="button-1" href="quote.html"><?php echo get_theme_mod('header_button_text'); ?></a>
 						</div>
 						<div class="menu">
 							<nav>
@@ -73,8 +73,7 @@
 									'menu_class' => 'menu-nav',
 								));
 								?>
-								<!-- <li><a href="index.html">Home</a></li>
-									<li><a href="about.html">About Us</a></li>
+									<!-- <li><a href="about.html">About Us</a></li>
 									<li><a href="#">Page</a>
 										<ul>
 											<li><a href="team.html">Team</a></li>
@@ -100,7 +99,6 @@
 										</ul>
 									</li>
 									<li><a href="contact.html">Contact us</a></li> -->
-								</ul>
 							</nav>
 						</div>
 					</div>
@@ -122,48 +120,16 @@
 					<a href="javascript:void(0)"><i class="fas fa-times"></i></a>
 				</div>
 				<div class="mobile-logo">
-					<h2><a href="index.html">Logo</a></h2>
+					<a href="<?php echo esc_url(home_url('/')); ?>"><img width="80" height="40" src="<?php echo get_theme_mod('header_logo'); ?>" alt=""></a>
 				</div>
 				<div id="menu" class="text-left ">
-					<ul class="offcanvas_main_menu">
-						<li class="menu-item-has-children">
-							<a href="index.html"> Home</a>
-						</li>
-						<li class="menu-item-has-children">
-							<a href="about.html">About Us</a>
-						</li>
-						<li class="menu-item-has-children">
-							<a href="#">Page</a>
-							<ul class="sub-menu">
-								<li><a href="team.html">Team</a></li>
-								<li><a href="about.html">About Us</a></li>
-							</ul>
-						</li>
-						<li class="menu-item-has-children">
-							<a href="#">Services</a>
-							<ul class="sub-menu">
-								<li><a href="services.html">Services</a></li>
-								<li><a href="services-details.html">Services Details</a></li>
-							</ul>
-						</li>
-						<li class="menu-item-has-children">
-							<a href="#">Portfolio</a>
-							<ul class="sub-menu">
-								<li><a href="portfolio.html">Portfolio</a></li>
-								<li><a href="portfolio-details.html">Portfolio Details</a></li>
-							</ul>
-						</li>
-						<li class="menu-item-has-children">
-							<a href="#">Blog</a>
-							<ul class="sub-menu">
-								<li><a href="blog.html">Blog</a></li>
-								<li><a href="single.html">Blog Details</a></li>
-							</ul>
-						</li>
-						<li class="menu-item-has-children">
-							<a href="contact.html"> Contact Us</a>
-						</li>
-					</ul>
+
+					<?php
+					wp_nav_menu(array(
+						'theme_location' => 'primary',
+						'menu_class' => 'offcanvas_main_menu',
+					));
+					?>
 				</div>
 			</div>
 		</div>
