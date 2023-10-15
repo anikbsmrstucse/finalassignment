@@ -29,7 +29,7 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="footer-bottom-text">
-						<p>Copyrights © 2021 <a target="__blank" href="https://codepopular.com/">CodePopular</a> All Rights Reserved</p>
+						<p><?php echo get_theme_mod('copyright_area'); ?> <a target="__blank" href="<?php echo get_theme_mod('link_text_url'); ?>"><?php echo get_theme_mod('link_text'); ?></a> All Rights Reserved</p>
 					</div>
 				</div>
 			</div>

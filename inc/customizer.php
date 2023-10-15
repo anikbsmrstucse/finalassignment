@@ -201,6 +201,46 @@ function anik_finalassignment_customizer_register($wp_customize)
 		'control' => 'header_button_text',
 	));
 
+	/**Bottom Footer Area customizer**/
+	$wp_customize->add_section('bottom_footer_area', array(
+		'title' => esc_html__('Bottom Footer Area', 'finalassignment'),
+		'description' => esc_html__('If you change anything of Bottom Footer Area,you can it from here', 'finalassignment'),
+	));
+	// copyright text
+	$wp_customize->add_setting('copyright_area', array(
+		'default' => esc_html__('Copyrights © 2021', 'finalassignment'),
+	));
+	$wp_customize->add_control('copyright_area', array(
+		'label' => esc_html__('Copy Right Text', 'finalassignment'),
+		'section' => 'bottom_footer_area',
+		'setting' => 'copyright_area',
+	));
+	//link customizer
+	$wp_customize->add_setting('link_text', array(
+		'default' => esc_html__('PopularCode', 'finalassignment'),
+	));
+	$wp_customize->add_control('link_text', array(
+		'label' => esc_html__('Link Text', 'finalassignment'),
+		'section' => 'bottom_footer_area',
+		'setting' => 'link_text',
+	));
+	// link text url
+	$wp_customize->add_setting('link_text_url', array(
+		'default'           => 'https://www.codepopular.com',
+		'sanitize_callback' => 'esc_url',
+	));
+
+	$wp_customize->add_control('link_text_url', array(
+		'type'        => 'url',
+		'label'       => esc_html__('Link Text Url', 'finalassignment'),
+		'section'     => 'bottom_footer_area',
+		'settings'    => 'link_text_url',
+		'input_attrs' => array(
+			'placeholder' => 'https://',
+		),
+	));
+
+
 }
 
 add_action('customize_register', 'anik_finalassignment_customizer_register');
