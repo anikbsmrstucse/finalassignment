@@ -19,6 +19,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 
+	<?php
+	if (is_singular() && comments_open() && get_option('thread_comments')) {
+		wp_enqueue_script('comment-reply');
+	}
+	?>
+
 	<?php wp_head(); ?>
 </head>
 
@@ -73,7 +79,7 @@
 									'menu_class' => 'menu-nav',
 								));
 								?>
-									<!-- <li><a href="about.html">About Us</a></li>
+								<!-- <li><a href="about.html">About Us</a></li>
 									<li><a href="#">Page</a>
 										<ul>
 											<li><a href="team.html">Team</a></li>

@@ -43,10 +43,8 @@
 					</div>
 					<h3><?php echo the_title(); ?></h3>
 					<p><?php echo the_content(); ?></p>
-
 				</div>
 			</div>
-
 		</div>
 	</div>
 

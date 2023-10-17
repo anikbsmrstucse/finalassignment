@@ -343,23 +343,95 @@ add_theme_support('widgets');
 
 
 // pagination or page navigation
-function anik_page_nav(){
-    global $wp_query,$wp_rewrite;
-    $pages = '';
-    $max = $wp_query->max_num_pages;
-    if(!$current=get_query_var('paged')) $current = 1;
-    $args['base'] = str_replace(90, '%#%' , get_pagenum_link(90)); //get_pagenum_link and replace value must be same otherwise function data cannot be fount.
-    // $args['base'] = $wp_rewrite->pagination_base . '/%#%';
-    $args['current'] = $current;
-    $total = 1;
-    $args['prev_text'] = '<i class="fa fa-angle-left"></i>';
-    $args['next_text'] = '<i class="fa fa-angle-right"></i>';
-    if($max > 1) echo '</pre>
+function anik_page_nav()
+{
+	global $wp_query, $wp_rewrite;
+	$pages = '';
+	$max = $wp_query->max_num_pages;
+	if (!$current = get_query_var('paged')) $current = 1;
+	$args['base'] = str_replace(90, '%#%', get_pagenum_link(90)); //get_pagenum_link and replace value must be same otherwise function data cannot be fount.
+	// $args['base'] = $wp_rewrite->pagination_base . '/%#%';
+	$args['current'] = $current;
+	$total = 1;
+	$args['prev_text'] = '<i class="fa fa-angle-left"></i>';
+	$args['next_text'] = '<i class="fa fa-angle-right"></i>';
+	if ($max > 1) echo '</pre>
     <div class="blog-pagination text-center">';
-    // if($total == 1 && $max > 1) $pages = '<p class="pages"> Page ' . $current .'<span> of </span>' . $max .'</p>';
-    echo $pages . paginate_links($args);
-    if($max>1) echo '</div><pre>';
+	// if($total == 1 && $max > 1) $pages = '<p class="pages"> Page ' . $current .'<span> of </span>' . $max .'</p>';
+	echo $pages . paginate_links($args);
+	if ($max > 1) echo '</div><pre>';
 }
+
+// custom field function creation
+function custom_field_creation($fields)
+{
+    $comments = wp_get_current_commenter();
+    $req = get_option('require_name_email');
+
+    $fields['author'] ='<p class="comment-form-author">'  .
+	'<input id="author" class="blog-form-input" placeholder="Your Name* " name="author" type="text" value="' . esc_attr($comments['comment_author']) .
+	'" size="30"/></p>';
+	$fields['email'] =
+      '<p class="comment-form-email">'.
+      '<input id="email" class="blog-form-input" placeholder="Your Email* " name="email" type="text" value="' . esc_attr(  $comments['comment_author_email'] ) .
+      '" size="30" "required" /></p>';
+
+    return $fields;
+}
+
+add_filter('comment_form_default_fields', 'custom_field_creation');
+
+// add extra field functionality
+add_filter( 'comment_form_defaults', 'change_comment_form_defaults');
+
+function change_comment_form_defaults( $default ) {
+    $commenter = wp_get_current_commenter();	
+    $default[ 'fields' ][ 'email' ] .= '<p class="comment-form-author">
+        <input id="subject" placeholder="Subject" name="subject" size="30" type="text" /></p>';
+    return $default;
+}
+
+// storing the data value from new feild
+add_action( 'comment_post', 'save_comment_meta_data' );
+
+function save_comment_meta_data( $comment_id ) {
+    add_comment_meta( $comment_id, 'subject', $_POST[ 'subject' ] );
+}
+
+// retrive comment in comment meta data 
+add_filter( 'get_comment_author_link', 'attach_city_to_author' );
+
+function attach_city_to_author( $author ) {
+    $subject = get_comment_meta( get_comment_ID(), 'subject', true );
+    if ( $subject )
+        $author .= " ($subject)";
+    return $author;
+}
+
+
+
+// comments rearrange feilds
+function comment_rearrange($fields)
+{
+
+	$finaltheme_comment = $fields['comment'];
+	$finaltheme_author = $fields['author'];
+	$finaltheme_email = $fields['email'];
+
+	unset($fields['comment']);
+	unset($fields['author']);
+	unset($fields['email']);
+	unset($fields['url']);
+	unset($fields['cookies']);
+
+	$fields['author'] = $finaltheme_author;
+	$fields['email'] = $finaltheme_email;
+	$fields['comment'] = $finaltheme_comment;
+
+	return $fields;
+}
+
+add_filter('comment_form_fields', 'comment_rearrange');
 
 
 /**
@@ -391,6 +463,7 @@ function finalassignment_scripts()
 
 	// responsive css file enqueue register
 	wp_register_style('responsivecss', get_template_directory_uri() . '/assets/css/responsive.css', array(), '1.0.0', 'all');
+
 
 
 	//fontawsome enqueue style file call here

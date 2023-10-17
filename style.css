@@ -1287,7 +1287,7 @@ p {
   padding: 30px;
   margin-bottom: 30px;
 }
-.sidebar-widgets h4.title {
+.sidebar-widgets h2.widget-title {
   position: relative;
   margin-bottom: 10px;
   line-height: 1;
@@ -1296,7 +1296,7 @@ p {
   color: #666;
   padding-left: 14px;
 }
-.sidebar-widgets h4.title::after {
+.sidebar-widgets h2.widget-title::after {
   content: "";
   clear: both;
   display: block;
@@ -1332,6 +1332,7 @@ p {
   background: none;
   color: #333;
   height: 55px;
+  transform: rotate(270deg);
 }
 .sidebar-widgets form button:hover {
   color: #ff5f15;
@@ -1355,10 +1356,10 @@ p {
 .sidebar-widgets ul li a:hover {
   color: #ff5f15;
 }
-.sidebar-widgets .tags a {
+.wp-widget-group__inner-blocks .wp-block-tag-cloud a {
   display: inline-block;
   padding: 7px 20px;
-  font-size: 14px;
+  font-size: 14px !important;
   text-transform: uppercase;
   font-weight: 500;
   color: #333;
@@ -1367,7 +1368,7 @@ p {
   transition: all 0.3s ease-in-out;
   margin: 5px 5px;
 }
-.sidebar-widgets .tags a:hover {
+.wp-block-tag-cloud a:hover {
   background: #ff5f15;
   color: #fff;
   border-color: #ff5f15;
@@ -1399,18 +1400,40 @@ p {
   margin-bottom: 30px;
   position: relative;
   padding-left: 90px;
+  margin-top: 20px;
 }
 .comments-list ul li img {
   position: absolute;
-  width: 80px;
   left: 0;
   top: 0;
 }
-.comments-list ul li h5 {
+.comments-list ul li article {
+  margin-bottom: 30px;
+  margin-top: 10px;
+}
+.comments-list ul li article footer {
+  display: flex;
+}
+.comments-list ul li article footer .vcard .fn {
   font-size: 18px;
   font-weight: 600;
-  float: left;
+  color: #444;
 }
+.comments-list ul li article footer .vcard .fn a{
+  font-size: 18px;
+  font-weight: 600;
+  color: #444;
+}
+.comments-list ul li article footer .vcard span {
+  display: none;
+}
+
+.comments-list ul li article footer .comment-metadata a{
+  color: #666;
+  font-size: 13px;
+  padding-left: 20px;
+}
+
 .comments-list ul li h5 a {
   color: #444;
 }
@@ -1425,7 +1448,7 @@ p {
   line-height: 26px;
   color: #666;
 }
-.comments-list ul li .reply {
+.comments-list ul li article .reply {
   position: absolute;
   top: 0;
   right: 0px;
@@ -1438,14 +1461,31 @@ p {
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
 }
+.comment-list ul li article .reply a{
+  text-decoration: none;
+  color: #333 !important;
+}
 .comments-list ul li .reply:hover {
   background: #f16000;
-  color: #fff;
+  color: #fff !important;
   border-color: #f16000;
 }
 .comment-relpy {
   margin-top: 20px;
 }
+
+.comments-list ul li .comments-form .comment-reply-title{
+  font-size: 14px;
+}
+
+.comments-list ul li .comments-form .comment-reply-title small {
+  margin-left: 10px;
+  font-size: 14px;
+}
+.comments-list ul li .comments-form .comment-reply-title small a{
+  color: #f16000 !important;
+}
+
 .comments-form input {
   width: 100%;
   line-height: 1;

@@ -41,10 +41,16 @@ get_header();
 					endif;
 					?>
 				</div>
-				<!-- sidebar -->
+				<!-- comment template -->
+				<?php
+                // If comments are open or we have at least one comment, load up the comment template.
+                if (comments_open() || get_comments_number()) :
+                    comments_template();
+                endif;
+                ?>
 			</div>
 			<div class="col-lg-4">
-				<!-- Single -->
+				<!-- sidebar -->
 				<?php get_sidebar('sidebar-1'); ?>
 			</div>
 		</div>
