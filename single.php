@@ -11,6 +11,19 @@
 get_header();
 ?>
 
+<section class="breacrumb-area pt-100 pb-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="breadcrumb-content">
+                            <h2>Blog Details</h2>
+                            <?php echo mj_wp_breadcrumb(); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 <section class="blog-area pt-100 pb-100">
 	<div class="container">
 

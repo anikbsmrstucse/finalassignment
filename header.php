@@ -69,7 +69,7 @@
 					</div>
 					<div class="col-lg-10">
 						<div class="right-btn-m align-self-center">
-							<a class="button-1" href="quote.html"><?php echo get_theme_mod('header_button_text'); ?></a>
+							<a class="button-1" href="<?php echo esc_url(home_url('/'))."faq" ?>"><?php echo get_theme_mod('header_button_text'); ?></a>
 						</div>
 						<div class="menu">
 							<nav>

@@ -365,47 +365,50 @@ function anik_page_nav()
 // custom field function creation
 function custom_field_creation($fields)
 {
-    $comments = wp_get_current_commenter();
-    $req = get_option('require_name_email');
+	$comments = wp_get_current_commenter();
+	$req = get_option('require_name_email');
 
-    $fields['author'] ='<p class="comment-form-author">'  .
-	'<input id="author" class="blog-form-input" placeholder="Your Name* " name="author" type="text" value="' . esc_attr($comments['comment_author']) .
-	'" size="30"/></p>';
+	$fields['author'] = '<p class="comment-form-author">'  .
+		'<input id="author" class="blog-form-input" placeholder="Your Name* " name="author" type="text" value="' . esc_attr($comments['comment_author']) .
+		'" size="30"/></p>';
 	$fields['email'] =
-      '<p class="comment-form-email">'.
-      '<input id="email" class="blog-form-input" placeholder="Your Email* " name="email" type="text" value="' . esc_attr(  $comments['comment_author_email'] ) .
-      '" size="30" "required" /></p>';
+		'<p class="comment-form-email">' .
+		'<input id="email" class="blog-form-input" placeholder="Your Email* " name="email" type="text" value="' . esc_attr($comments['comment_author_email']) .
+		'" size="30" "required" /></p>';
 
-    return $fields;
+	return $fields;
 }
 
 add_filter('comment_form_default_fields', 'custom_field_creation');
 
 // add extra field functionality
-add_filter( 'comment_form_defaults', 'change_comment_form_defaults');
+add_filter('comment_form_defaults', 'change_comment_form_defaults');
 
-function change_comment_form_defaults( $default ) {
-    $commenter = wp_get_current_commenter();	
-    $default[ 'fields' ][ 'email' ] .= '<p class="comment-form-author">
+function change_comment_form_defaults($default)
+{
+	$commenter = wp_get_current_commenter();
+	$default['fields']['email'] .= '<p class="comment-form-author">
         <input id="subject" placeholder="Subject" name="subject" size="30" type="text" /></p>';
-    return $default;
+	return $default;
 }
 
 // storing the data value from new feild
-add_action( 'comment_post', 'save_comment_meta_data' );
+add_action('comment_post', 'save_comment_meta_data');
 
-function save_comment_meta_data( $comment_id ) {
-    add_comment_meta( $comment_id, 'subject', $_POST[ 'subject' ] );
+function save_comment_meta_data($comment_id)
+{
+	add_comment_meta($comment_id, 'subject', $_POST['subject']);
 }
 
 // retrive comment in comment meta data 
-add_filter( 'get_comment_author_link', 'attach_city_to_author' );
+add_filter('get_comment_author_link', 'attach_city_to_author');
 
-function attach_city_to_author( $author ) {
-    $subject = get_comment_meta( get_comment_ID(), 'subject', true );
-    if ( $subject )
-        $author .= " ($subject)";
-    return $author;
+function attach_city_to_author($author)
+{
+	$subject = get_comment_meta(get_comment_ID(), 'subject', true);
+	if ($subject)
+		$author .= " ($subject)";
+	return $author;
 }
 
 
@@ -432,6 +435,71 @@ function comment_rearrange($fields)
 }
 
 add_filter('comment_form_fields', 'comment_rearrange');
+
+
+// custom post type for recent works
+
+function create_recentwork_posttype_function()
+{
+	$labels = array(
+		'name' => _x('Recent Work', 'post type general name', 'finalassignment'),
+		'singular_name' => _x('Recent Work', 'post type Singular name', 'finalassignment'),
+		'add_new' => _x('Add Recent Work', '', 'finalassignment'),
+		'add_new_item' => __('Add New Recent Work', 'finalassignment'),
+		'edit_item' => __('Edit Recent Work', 'finalassignment'),
+		'new_item' => __('New Recent Work', 'finalassignment'),
+		'all_items' => __('All Recent Work', 'finalassignment'),
+		'view_item' => __('View Recent Work', 'finalassignment'),
+		'search_items' => __('Search Recent Work', 'finalassignment'),
+		'not_found' => __('No Recent Work found', 'finalassignment'),
+		'not_found_in_trash' => __('No Recent Work on trash', 'finalassignment'),
+		'parent_item_colon' => '',
+		'menu_name' => __('Recent Works', 'finalassignment')
+	);
+	$args = array(
+		'labels' => $labels,
+		'public' => true,
+		'publicly_queryable' => true,
+		'show_ui' => true,
+		'show_in_menu' => true,
+		'query_var' => true,
+		'rewrite' => array('slug' => 'gallery'),
+		'capability_type' => 'page',
+		'has_archive' => true,
+		'hierarchical' => true,
+		'menu_position' => null,
+		'menu_icon' => 'dashicons-format-gallery',
+		'supports' => array('title', 'thumbnail','editor','excerpt'),
+	);
+	$labels = array(
+		'name' => __('Category'),
+		'singular_name' => __('Category'),
+		'search_items' => __('Search'),
+		'popular_items' => __('More Used'),
+		'all_items' => __('All Categories'),
+		'parent_item' => null,
+		'parent_item_colon' => null,
+		'edit_item' => __('Add new'),
+		'update_item' => __('Update'),
+		'add_new_item' => __('Add new Category'),
+		'new_item_name' => __('New')
+	);
+	register_taxonomy(
+		'work_category',
+		array('recent_work'),
+		array(
+			'hierarchical' => true,
+			'labels' => $labels,
+			'singular_label' => 'work_category',
+			'all_items' => 'Category',
+			'query_var' => true,
+			'rewrite' => array('slug' => 'cat')
+		)
+	);
+	register_post_type('recent_work', $args);
+	flush_rewrite_rules();
+}
+add_action('init', 'create_recentwork_posttype_function');
 
 
 /**
@@ -463,6 +531,8 @@ function finalassignment_scripts()
 
 	// responsive css file enqueue register
 	wp_register_style('responsivecss', get_template_directory_uri() . '/assets/css/responsive.css', array(), '1.0.0', 'all');
+	// 
+	wp_register_style('jqueryuicss', get_template_directory_uri() . '/assets/css/jquery-ui.css', array(), '1.10.4', 'all');
 
 
 
@@ -482,7 +552,7 @@ function finalassignment_scripts()
 	wp_enqueue_style('responsivecss');
 	//animate enqueue style file call here
 	wp_enqueue_style('animatecss');
-	//default style css file
+	// stylecss
 	wp_enqueue_style('finalassignment-style', get_stylesheet_uri(), array(), _S_VERSION);
 
 
@@ -513,6 +583,8 @@ function finalassignment_scripts()
 	wp_enqueue_script('popperjs', get_template_directory_uri() . '/assets/js/popper.min.js', array(), _S_VERSION, true);
 	// wow js file calling
 	wp_enqueue_script('wowjs', get_template_directory_uri() . '/assets/js/wow.min.js', array(), _S_VERSION, true);
+	// mainjs
+	wp_enqueue_script('main', get_template_directory_uri() . '/assets/js/script.js', array(), _S_VERSION, true);
 
 	if (is_singular() && comments_open() && get_option('thread_comments')) {
 		wp_enqueue_script('comment-reply');
@@ -539,8 +611,12 @@ require get_template_directory() . '/inc/template-functions.php';
  * Customizer additions.
  */
 require get_template_directory() . '/inc/customizer.php';
+
+//breadcrum function calling 
 require get_template_directory() . '/inc/mj-wp-breadcrumb.php';
 
+// custom gallery feild crations function file calling
+require get_template_directory() . '/inc/custom-gallery.php';
 /**
  * Load Jetpack compatibility file.
  */

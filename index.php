@@ -16,9 +16,22 @@
 get_header();
 ?>
 
+<!-- breadcrum area start -->
+<section class="breacrumb-area pt-100 pb-100">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="breadcrumb-content">
+					<h2>Blog</h2>
+					<?php echo mj_wp_breadcrumb(); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Breadcrum area end -->
 <section class="blog-area pt-100 pb-100">
 	<div class="container">
-
 		<div class="row">
 			<div class="col-lg-8">
 				<div class="row">
@@ -49,12 +62,12 @@ get_header();
 					<!-- blog pagination -->
 					<div class="row mt-30">
 						<div class="col-lg-12">
-								<?php if ('anik_page_nav') {
-									anik_page_nav();
-								} else { ?>
-									<?php next_post_link(); ?>
-									<?php previous_post_link(); ?>
-								<?php } ?>
+							<?php if ('anik_page_nav') {
+								anik_page_nav();
+							} else { ?>
+								<?php next_post_link(); ?>
+								<?php previous_post_link(); ?>
+							<?php } ?>
 						</div>
 					</div>
 				</div>
